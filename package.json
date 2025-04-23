@@ -1,7 +1,10 @@
 {
   "name": "foodfy-hono-bun-api",
+  "type": "module",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "start": "bun run dist/index.js",
+    "build": "bun build src/index.ts --outdir ./dist --format esm --target bun --splitting"
   },
   "dependencies": {
     "hono": "^4.7.7"
