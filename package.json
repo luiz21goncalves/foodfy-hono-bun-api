@@ -7,7 +7,8 @@
     "build": "bun build ./src/http/server.ts --outdir ./dist --format esm --target bun --minify --packages external",
     "lint": "bunx biome check .",
     "lint:fix": "bunx biome check . --write",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "bun test"
   },
   "dependencies": {
     "@hono/zod-validator": "0.4.3",
