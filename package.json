@@ -17,6 +17,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/bun": "1.2.10",
-    "husky": "9.1.7"
+    "husky": "9.1.7",
+    "lint-staged": "15.5.1"
   }
 }
