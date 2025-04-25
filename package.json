@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "bun run --hot ./src/server.ts",
     "start": "bun run dist/server.js",
-    "build": "bun build ./src/server.ts --outdir ./dist --format esm --target bun --minify --external hono"
+    "build": "bun build ./src/server.ts --outdir ./dist --format esm --target bun --minify --packages external"
   },
   "dependencies": {
     "hono": "4.7.7"
