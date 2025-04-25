@@ -7,7 +7,9 @@
     "build": "bun build ./src/server.ts --outdir ./dist --format esm --target bun --minify --packages external"
   },
   "dependencies": {
-    "hono": "4.7.7"
+    "hono": "4.7.7",
+    "hono-pino": "0.8.0",
+    "pino": "9.6.0"
   },
   "devDependencies": {
     "@types/bun": "1.2.10"
