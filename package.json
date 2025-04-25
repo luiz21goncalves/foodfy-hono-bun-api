@@ -6,7 +6,8 @@
     "start": "bun run dist/server.js",
     "build": "bun build ./src/server.ts --outdir ./dist --format esm --target bun --minify --packages external",
     "lint": "bunx biome check .",
-    "lint:fix": "bunx biome check . --write"
+    "lint:fix": "bunx biome check . --write",
+    "prepare": "husky"
   },
   "dependencies": {
     "hono": "4.7.7",
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@types/bun": "1.2.10"
+    "@types/bun": "1.2.10",
+    "husky": "9.1.7"
   }
 }
