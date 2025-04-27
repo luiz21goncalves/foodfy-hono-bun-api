@@ -1,15 +1,19 @@
 import { describe, expect, test } from 'bun:test'
-import { app } from '../../src/http/app'
+import { app } from '@/http/app'
 
 const PATH = '/'
+const METHOD = 'GET'
 
-describe(`GET ${PATH}`, () => {
-  test('Anonymous user', () => {
+describe(`${METHOD} ${PATH}`, () => {
+  describe('Anonymous user', () => {
     test('with non existing route', async () => {
-      const response = await app.request(PATH)
+      const response = await app.request(PATH, {
+        method: METHOD,
+        headers: { 'Content-Type': 'application/json' },
+      })
       const body = await response.json()
 
-      expect(response.status).toBe(404)
+      expect(response.status).toEqual(404)
       expect(body).toStrictEqual({
         name: 'NotFoundError',
         status_code: 404,

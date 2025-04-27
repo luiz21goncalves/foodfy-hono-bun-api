@@ -5,6 +5,7 @@ import { cors } from 'hono/cors'
 import { HTTPException } from 'hono/http-exception'
 import { requestId } from 'hono/request-id'
 import { InternalServerError, NotFoundError } from '../errors'
+import { routes } from './routes'
 
 export const app = new Hono()
 
@@ -37,3 +38,5 @@ app.onError((err, _c) => {
 
   return internalServerError.getResponse()
 })
+
+app.route('/v1', routes)

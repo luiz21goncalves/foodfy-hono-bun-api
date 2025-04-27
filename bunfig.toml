@@ -3,4 +3,5 @@ exact = true
 
 [test]
 coverage = true
-coverageReporter = [ "text" ]
+coverageReporter = [ "text"]
+preload = ["./tests/setup.ts"]
