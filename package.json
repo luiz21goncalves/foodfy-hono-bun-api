@@ -2,7 +2,7 @@
   "name": "foodfy-hono-bun-api",
   "type": "module",
   "scripts": {
-    "dev": "bun run --hot ./src/http/server.ts",
+    "dev": "NODE_ENV=development bun run --hot ./src/http/server.ts",
     "start": "bun run dist/server.js",
     "build": "bun build ./src/http/server.ts --outdir ./dist --format esm --target bun --minify --packages external",
     "lint": "bunx biome check .",
