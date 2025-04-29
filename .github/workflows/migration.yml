@@ -40,8 +40,5 @@ jobs:
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          NODE_ENV: production
-          MAILER_SMTP_URL: smtp://localhost:1025/?disable_starttls=true
-          MAILER_FROM_ADDRESS: no-replay@foodfy.com.br
-          MAILER_FROM_NAME: Foodfy
+          LOGGER_LEVEL: silent
         run: bunx drizzle-kit migrate
