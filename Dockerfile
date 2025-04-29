@@ -19,6 +19,7 @@ FROM base AS release
 COPY --from=dependencies /temp/prod/node_modules node_modules
 COPY --from=builder /usr/src/app/dist dist
 COPY --from=builder /usr/src/app/package.json .
+COPY --from=builder /usr/src/app/tsconfig.json .
 USER bun
 EXPOSE 3000/tcp
 ENTRYPOINT [ "bun", "run", "start" ]
