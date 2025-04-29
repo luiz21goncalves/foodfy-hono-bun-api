@@ -1,0 +1,61 @@
+name: Lint
+
+on: pull_request
+
+env:
+  bun: 1.2.11
+
+jobs:
+  biome:
+    name: Biome
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: install bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.bun }}
+
+      - name: cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-${{ env.bun }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.bun }}-bun-
+
+      - name: install dependencies
+        run: bun install
+
+      - name: run biome
+        run: bun run lint
+
+  commitlint:
+    name: Commitlint
+    runs-on: ubuntu-24.04
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: install bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.bun }}
+
+      - name: cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-${{ env.bun }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.bun }}-bun-
+
+      - name: install dependencies
+        run: bun install
+
+      - run: bunx commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
