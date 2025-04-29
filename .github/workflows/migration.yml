@@ -41,4 +41,5 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           LOGGER_LEVEL: silent
+          NODE_ENV: production
         run: bunx drizzle-kit migrate
