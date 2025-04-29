@@ -1,0 +1,37 @@
+name: Test
+
+on: pull_request
+
+env:
+  bun: 1.2.11
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: run services
+        run: docker compose up -d
+
+      - name: install bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.bun }}
+
+      - name: cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-${{ env.bun }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.bun }}-bun-
+
+      - name: install dependencies
+        run: bun install
+
+      - name: run tests
+        run: bun run test

@@ -1,4 +1,4 @@
-FROM oven/bun:1.2.10 AS base
+FROM oven/bun:1.2.11-alpine AS base
 WORKDIR /usr/src/app
 
 FROM base AS dependencies

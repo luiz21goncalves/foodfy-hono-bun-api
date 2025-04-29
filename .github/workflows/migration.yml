@@ -1,0 +1,47 @@
+name: Migration
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  bun: 1.2.11
+
+jobs:
+  migration:
+    name: Migration
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: install bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.bun }}
+
+      - name: cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-${{ env.bun }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.bun }}-bun-
+
+      - name: install dependencies
+        run: bun install
+
+      - name: run migration
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NODE_ENV: production
+          MAILER_SMTP_URL: smtp://localhost:1025/?disable_starttls=true
+          MAILER_FROM_ADDRESS: no-replay@foodfy.com.br
+          MAILER_FROM_NAME: Foodfy
+        run: bunx drizzle-kit migrate
