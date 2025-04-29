@@ -1,6 +1,7 @@
 {
   "name": "foodfy-hono-bun-api",
   "type": "module",
+  "version": "0.0.0",
   "scripts": {
     "dev": "NODE_ENV=development bun run --hot ./src/http/server.ts",
     "start": "bun run dist/server.js",
@@ -26,7 +27,7 @@
     "@commitlint/cli": "19.8.0",
     "@commitlint/config-conventional": "19.8.0",
     "@faker-js/faker": "9.7.0",
-    "@types/bun": "1.2.10",
+    "@types/bun": "1.2.11",
     "drizzle-kit": "0.31.0",
     "husky": "9.1.7",
     "lint-staged": "15.5.1",
