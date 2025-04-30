@@ -5,6 +5,7 @@ import { cors } from 'hono/cors'
 import { HTTPException } from 'hono/http-exception'
 import { requestId } from 'hono/request-id'
 import { InternalServerError, NotFoundError } from '../errors'
+import { jsonResponse } from './middlewares/json-response'
 import { routes } from './routes'
 
 export const app = new Hono()
@@ -18,6 +19,7 @@ app.use(
   })
 )
 app.use(cors())
+app.use(jsonResponse)
 
 app.notFound((c) => {
   const { path, method } = c.req
