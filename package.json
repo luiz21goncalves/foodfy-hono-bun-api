@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "NODE_ENV=development bun run --hot ./src/http/server.ts",
-    "start": "bun run dist/server.js",
-    "build": "bun build ./src/http/server.ts --outdir ./dist --format esm --target bun --minify --packages external",
+    "start": "bun run ./src/http/server.ts",
     "lint": "bunx biome check .",
     "lint:fix": "bunx biome check . --write",
     "prepare": "husky",
