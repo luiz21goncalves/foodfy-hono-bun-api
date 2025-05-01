@@ -2,7 +2,7 @@ import type { users } from '@/db/schema'
 import { faker } from '@faker-js/faker'
 
 export async function userFactory(
-  override: Partial<typeof users.$inferInsert>
+  override?: Partial<typeof users.$inferInsert>
 ): Promise<typeof users.$inferSelect> {
   return {
     id: Bun.randomUUIDv7(),
