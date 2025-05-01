@@ -15,7 +15,11 @@ export const zValidator = <
     if (!result.success) {
       const validationError = fromError(result.error)
 
-      throw new ValidationError(validationError)
+      throw new ValidationError({
+        cause: validationError,
+        details: validationError.details,
+        message: validationError.message,
+      })
     }
   })
 }
