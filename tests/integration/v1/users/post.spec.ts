@@ -2,6 +2,7 @@ import { describe, expect, test } from 'bun:test'
 import { app } from '@/http/app'
 import { userRepository } from '@/repositories/users-repository'
 import { faker } from '@faker-js/faker'
+import { userFactory } from 'tests/factories/user-factory'
 
 const PATH = '/v1/users'
 const METHOD = 'POST'
@@ -137,14 +138,10 @@ describe(`${METHOD} ${PATH}`, () => {
 
     test('with duplicated email', async () => {
       const duplicatedEmail = faker.internet.email()
-
-      await userRepository.save({
+      const userData = await userFactory({
         email: duplicatedEmail.toLowerCase(),
-        id: Bun.randomUUIDv7(),
-        name: faker.person.fullName(),
-        role: 'writer',
-        passwordHash: faker.internet.password(),
       })
+      await userRepository.save(userData)
 
       const name = faker.person.fullName()
       const role = faker.helpers.arrayElement(['admin', 'writer'])
