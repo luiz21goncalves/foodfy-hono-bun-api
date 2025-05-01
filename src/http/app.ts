@@ -1,11 +1,9 @@
 import { ENV } from '@/env'
+import { AppError, InternalServerError, NotFoundError } from '@/errors'
 import { Hono } from 'hono'
 import { pinoLogger } from 'hono-pino'
 import { cors } from 'hono/cors'
-import { HTTPException } from 'hono/http-exception'
 import { requestId } from 'hono/request-id'
-import { InternalServerError, NotFoundError } from '../errors'
-import { jsonResponse } from './middlewares/json-response'
 import { routes } from './routes'
 
 export const app = new Hono()
@@ -19,26 +17,27 @@ app.use(
   })
 )
 app.use(cors())
-app.use(jsonResponse)
 
 app.notFound((c) => {
   const { path, method } = c.req
 
   const notFountError = new NotFoundError({
     message: `Route ${method}:${path} not found.`,
-  })
+  }).toJSON()
 
-  return notFountError.getResponse()
+  return c.json(notFountError, notFountError.status_code)
 })
 
-app.onError((err, _c) => {
-  if (err instanceof HTTPException) {
-    return err.getResponse()
+app.onError((err, c) => {
+  if (err instanceof AppError) {
+    const errorObject = err.toJSON()
+
+    return c.json(errorObject, errorObject.status_code)
   }
 
-  const internalServerError = new InternalServerError(err)
+  const internalServerError = new InternalServerError({ cause: err }).toJSON()
 
-  return internalServerError.getResponse()
+  return c.json(internalServerError, internalServerError.status_code)
 })
 
 app.route('/v1', routes)
