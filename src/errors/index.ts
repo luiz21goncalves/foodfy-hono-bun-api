@@ -98,3 +98,13 @@ export class ConflictError extends AppError {
     })
   }
 }
+
+export class AuthenticationError extends AppError {
+  constructor() {
+    super({
+      message: 'Invalid password or email.',
+      name: 'AuthenticationError',
+      statusCode: 400,
+    })
+  }
+}
